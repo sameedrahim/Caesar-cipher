@@ -1,0 +1,102 @@
+import random
+
+stages = ['''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========
+''']
+
+lives = 6
+
+word_list = ['camel', 'elephant', 'mouse']
+chosen_word = random.choice(word_list)
+# print(chosen_word)  # Optional: for testing only
+
+# Create a placeholder string
+placeholder = ""
+word_length = len(chosen_word)
+for position in range(word_length):
+    placeholder += "_"
+print(placeholder)
+
+game_over = False
+correct_letter = []
+
+while not game_over:
+    guess = input("guess the word: ").lower()
+
+    display = ""
+    for letter in chosen_word:
+        if letter == guess:
+            display += guess
+            correct_letter.append(letter)
+        elif letter in correct_letter:
+            display += letter
+        else:
+            display += "_"
+    print(display)
+
+    # If guess is not in the word, reduce a life
+    if guess not in chosen_word:
+        lives -= 1
+        print(stages[6 - lives])
+        if lives == 0:
+            game_over = True
+            print("You lose")
+
+    # If all letters are guessed
+    if "_" not in display:
+        game_over = True
+        print("You won")
